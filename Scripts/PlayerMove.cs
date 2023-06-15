@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// 1. 우선 class 바로 아래, 전역변수로 현재 JumpCount와 최대 점프 Count를 계산할 변수를 2개 만들어주고 값을 지정해줍니다.
-// 2. 점프를 제어하는 스크립트에 현재 JumpCount가 MaxJumpCount보다 적을 경우 점프하도록 하게하며 점프할 때마다 JumpCount를 1씩 증가시켜주는 스크립트를 추가합니다.
-// 3. 플레이어가 착지하였을 때, JumpCount가 2라면 이를 초기화 해주는 스크립트를 추가해줍니다.
 public class PlayerMove : MonoBehaviour
 {
     public GameManager gameManager;
@@ -49,7 +46,7 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.000001f, rigid.velocity.y);
         }
 
-        //방향 전환 - getbuttondown시 양쪽 키보드를 같이 누르면 플레이어 방향이 이상해짐
+        //방향 전환 - getbutton대신 getbuttondown 사용시 양쪽 키보드를 같이 누르면 플레이어 방향이 이상해짐
         if (Input.GetButton("Horizontal")){ 
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
         }
@@ -76,8 +73,6 @@ public class PlayerMove : MonoBehaviour
         }
 
         //레이 캐스트 - isGrounded를 쓰면 트리거가 두번씩 발생하는데 대신 이것을 쓰면 깔끔해짐
-        //BoxCollider2D를 isTrigger로 하나 더 만들어서 바닥 감지를 해서 잘됐긴 했지만
-        //매번 트리거가 두번씩 발생해서 거슬렸는데 골드메탈님의 강의로 레이캐스트를 사용하여 깔끔하게 바닥과의 충돌을 구현할 수 있었습니다. 감사합니다!
         if(rigid.velocity.y < 0){//아래로 내려올때만 레이캐스트 활성화 되게
             Debug.DrawRay(rigid.position, Vector3.down, new Color(1,0,0));
 
